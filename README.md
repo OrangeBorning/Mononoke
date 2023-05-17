@@ -25,4 +25,4 @@ A frontend engineering project documenting the journey of building a comprehensi
 
 #### develop branch
 
-![GIT 规范](./GIT 规范.svg)
+<image src="./GIT 规范.svg"/>
