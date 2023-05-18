@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  gitlab-runner:
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    environment:
+      # GitLab 实例的 UR
+      - CI_SERVER_URL=http://dai.deloitte.com:58502/
+      # GitLab CI/CD token。
+      - REGISTRATION_TOKEN=xCysAvuE57QQt9xvtCNM
+      # 如果设置为 true，注册过程将不会有交互提示，这对于自动化部署很有用。
+      - REGISTER_NON_INTERACTIVE=true
+      # 注册的 Runner 的名称
+      - RUNNER_NAME=julianzhu-runner
+      # Runner 如果设置为 true，该 Runner 将能够执行没有标签的作业
+      - REGISTER_RUN_UNTAGGED=true
+      # Runner 使用的执行器类型，例如 "shell"、"docker" 等
+      - RUNNER_EXECUTOR=docker
+    volumes:
+      - ./gitlab-runner/config:/etc/gitlab-runner
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /Users/julianzhu/.docker/:/root/.docker/
+      
+    # entrypoint: ["sh", "-c", "gitlab-runner register --non-interactive --executor docker --docker-image alpine:latest --url $$CI_SERVER_URL --registration-token $$REGISTRATION_TOKEN --description $$RUNNER_NAME --run-untagged $$REGISTER_RUN_UNTAGGED && gitlab-runner run"]
